@@ -1,0 +1,10 @@
+#include "main.h"
+
+int main(void){
+	//enables HSE
+	RCC->CR |= (1 << 16);
+	while(|RCC->CR & (1 << 17))
+	while (1){
+
+	}
+}
