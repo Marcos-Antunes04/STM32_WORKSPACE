@@ -305,3 +305,274 @@ Finished building: default.size.stdout
  
 Finished building: GPIO_BARE_METAL.list
  
+18:55:45 **** Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Startup/startup_stm32f407vetx.d" -MT"Startup/startup_stm32f407vetx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Startup/startup_stm32f407vetx.o" "../Startup/startup_stm32f407vetx.s"
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o" "../Src/main.s"
+arm-none-eabi-gcc "../Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F407VETx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/syscalls.d" -MT"Src/syscalls.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/syscalls.o"
+arm-none-eabi-gcc "../Src/sysmem.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F407VETx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/sysmem.d" -MT"Src/sysmem.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/sysmem.o"
+../Src/main.s: Assembler messages:
+../Src/main.s:5: Error: unrecognized syntax mode "unifiend"
+make: *** [Src/subdir.mk:29: Src/main.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+18:55:57 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o" "../Src/main.s"
+arm-none-eabi-gcc -o "ARM_ASM.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\xboxw\STM32CubeIDE\workspace_git\ARM_ASM\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ARM_ASM.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ARM_ASM.elf
+ 
+arm-none-eabi-size  ARM_ASM.elf 
+arm-none-eabi-objdump -h -S ARM_ASM.elf  > "ARM_ASM.list"
+   text	   data	    bss	    dec	    hex	filename
+    648	      8	   1568	   2224	    8b0	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+Finished building: ARM_ASM.list
+ 
+18:58:09 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-size  ARM_ASM.elf 
+   text	   data	    bss	    dec	    hex	filename
+    648	      8	   1568	   2224	    8b0	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+19:08:24 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o" "../Src/main.s"
+../Src/main.s: Assembler messages:
+../Src/main.s:10: Error: bad expression
+../Src/main.s:10: Error: junk at end of line, first unrecognized character is `0'
+make: *** [Src/subdir.mk:29: Src/main.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+19:08:33 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o" "../Src/main.s"
+arm-none-eabi-gcc -o "ARM_ASM.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\xboxw\STM32CubeIDE\workspace_git\ARM_ASM\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ARM_ASM.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ARM_ASM.elf
+ 
+arm-none-eabi-size  ARM_ASM.elf 
+arm-none-eabi-objdump -h -S ARM_ASM.elf  > "ARM_ASM.list"
+   text	   data	    bss	    dec	    hex	filename
+    648	      8	   1568	   2224	    8b0	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+Finished building: ARM_ASM.list
+ 
+19:19:55 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o" "../Src/main.s"
+arm-none-eabi-gcc -o "ARM_ASM.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\xboxw\STM32CubeIDE\workspace_git\ARM_ASM\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ARM_ASM.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ARM_ASM.elf
+ 
+arm-none-eabi-size  ARM_ASM.elf 
+arm-none-eabi-objdump -h -S ARM_ASM.elf  > "ARM_ASM.list"
+   text	   data	    bss	    dec	    hex	filename
+    652	      8	   1568	   2228	    8b4	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+Finished building: ARM_ASM.list
+ 
+19:20:00 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-size  ARM_ASM.elf 
+   text	   data	    bss	    dec	    hex	filename
+    652	      8	   1568	   2228	    8b4	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+19:22:17 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o" "../Src/main.s"
+arm-none-eabi-gcc -o "ARM_ASM.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\xboxw\STM32CubeIDE\workspace_git\ARM_ASM\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ARM_ASM.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ARM_ASM.elf
+ 
+arm-none-eabi-size  ARM_ASM.elf 
+arm-none-eabi-objdump -h -S ARM_ASM.elf  > "ARM_ASM.list"
+   text	   data	    bss	    dec	    hex	filename
+    664	      8	   1568	   2240	    8c0	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+Finished building: ARM_ASM.list
+ 
+19:22:24 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-size  ARM_ASM.elf 
+   text	   data	    bss	    dec	    hex	filename
+    664	      8	   1568	   2240	    8c0	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+19:24:27 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o" "../Src/main.s"
+arm-none-eabi-gcc -o "ARM_ASM.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\xboxw\STM32CubeIDE\workspace_git\ARM_ASM\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ARM_ASM.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ARM_ASM.elf
+ 
+arm-none-eabi-size  ARM_ASM.elf 
+arm-none-eabi-objdump -h -S ARM_ASM.elf  > "ARM_ASM.list"
+   text	   data	    bss	    dec	    hex	filename
+    680	      8	   1568	   2256	    8d0	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+Finished building: ARM_ASM.list
+ 
+19:24:30 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-size  ARM_ASM.elf 
+   text	   data	    bss	    dec	    hex	filename
+    680	      8	   1568	   2256	    8d0	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+19:26:32 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-size  ARM_ASM.elf 
+   text	   data	    bss	    dec	    hex	filename
+    680	      8	   1568	   2256	    8d0	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+19:29:04 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o" "../Src/main.s"
+arm-none-eabi-gcc -o "ARM_ASM.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\xboxw\STM32CubeIDE\workspace_git\ARM_ASM\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ARM_ASM.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ARM_ASM.elf
+ 
+arm-none-eabi-size  ARM_ASM.elf 
+arm-none-eabi-objdump -h -S ARM_ASM.elf  > "ARM_ASM.list"
+   text	   data	    bss	    dec	    hex	filename
+    680	      8	   1568	   2256	    8d0	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+Finished building: ARM_ASM.list
+ 
+19:33:32 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o" "../Src/main.s"
+arm-none-eabi-gcc -o "ARM_ASM.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\xboxw\STM32CubeIDE\workspace_git\ARM_ASM\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ARM_ASM.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ARM_ASM.elf
+ 
+arm-none-eabi-size  ARM_ASM.elf 
+arm-none-eabi-objdump -h -S ARM_ASM.elf  > "ARM_ASM.list"
+   text	   data	    bss	    dec	    hex	filename
+    680	      8	   1568	   2256	    8d0	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+Finished building: ARM_ASM.list
+ 
+19:37:48 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o" "../Src/main.s"
+arm-none-eabi-gcc -o "ARM_ASM.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\xboxw\STM32CubeIDE\workspace_git\ARM_ASM\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ARM_ASM.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ARM_ASM.elf
+ 
+arm-none-eabi-size  ARM_ASM.elf 
+arm-none-eabi-objdump -h -S ARM_ASM.elf  > "ARM_ASM.list"
+   text	   data	    bss	    dec	    hex	filename
+    676	      8	   1568	   2252	    8cc	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+Finished building: ARM_ASM.list
+ 
+19:59:04 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o" "../Src/main.s"
+arm-none-eabi-gcc -o "ARM_ASM.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\xboxw\STM32CubeIDE\workspace_git\ARM_ASM\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ARM_ASM.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ARM_ASM.elf
+ 
+arm-none-eabi-size  ARM_ASM.elf 
+arm-none-eabi-objdump -h -S ARM_ASM.elf  > "ARM_ASM.list"
+   text	   data	    bss	    dec	    hex	filename
+    676	      8	   1568	   2252	    8cc	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+Finished building: ARM_ASM.list
+ 
+20:00:01 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o" "../Src/main.s"
+arm-none-eabi-gcc -o "ARM_ASM.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\xboxw\STM32CubeIDE\workspace_git\ARM_ASM\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ARM_ASM.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ARM_ASM.elf
+ 
+arm-none-eabi-size  ARM_ASM.elf 
+arm-none-eabi-objdump -h -S ARM_ASM.elf  > "ARM_ASM.list"
+   text	   data	    bss	    dec	    hex	filename
+    680	      8	   1568	   2256	    8d0	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+Finished building: ARM_ASM.list
+ 
+20:04:46 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o" "../Src/main.s"
+arm-none-eabi-gcc -o "ARM_ASM.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\xboxw\STM32CubeIDE\workspace_git\ARM_ASM\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ARM_ASM.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ARM_ASM.elf
+ 
+arm-none-eabi-size  ARM_ASM.elf 
+arm-none-eabi-objdump -h -S ARM_ASM.elf  > "ARM_ASM.list"
+   text	   data	    bss	    dec	    hex	filename
+    680	      8	   1568	   2256	    8d0	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+Finished building: ARM_ASM.list
+ 
+20:11:03 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o" "../Src/main.s"
+arm-none-eabi-gcc -o "ARM_ASM.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\xboxw\STM32CubeIDE\workspace_git\ARM_ASM\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ARM_ASM.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ARM_ASM.elf
+ 
+arm-none-eabi-size  ARM_ASM.elf 
+arm-none-eabi-objdump -h -S ARM_ASM.elf  > "ARM_ASM.list"
+   text	   data	    bss	    dec	    hex	filename
+    716	      8	   1568	   2292	    8f4	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+Finished building: ARM_ASM.list
+ 
+20:11:59 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-size  ARM_ASM.elf 
+   text	   data	    bss	    dec	    hex	filename
+    716	      8	   1568	   2292	    8f4	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+20:13:50 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o" "../Src/main.s"
+arm-none-eabi-gcc -o "ARM_ASM.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\xboxw\STM32CubeIDE\workspace_git\ARM_ASM\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ARM_ASM.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ARM_ASM.elf
+ 
+arm-none-eabi-size  ARM_ASM.elf 
+arm-none-eabi-objdump -h -S ARM_ASM.elf  > "ARM_ASM.list"
+   text	   data	    bss	    dec	    hex	filename
+    716	      8	   1568	   2292	    8f4	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+Finished building: ARM_ASM.list
+ 
+20:14:33 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o" "../Src/main.s"
+arm-none-eabi-gcc -o "ARM_ASM.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\xboxw\STM32CubeIDE\workspace_git\ARM_ASM\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ARM_ASM.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ARM_ASM.elf
+ 
+arm-none-eabi-size  ARM_ASM.elf 
+arm-none-eabi-objdump -h -S ARM_ASM.elf  > "ARM_ASM.list"
+   text	   data	    bss	    dec	    hex	filename
+    712	      8	   1568	   2288	    8f0	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+Finished building: ARM_ASM.list
+ 
+20:15:03 **** Incremental Build of configuration Debug for project ARM_ASM ****
+make -j12 all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o" "../Src/main.s"
+arm-none-eabi-gcc -o "ARM_ASM.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\xboxw\STM32CubeIDE\workspace_git\ARM_ASM\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ARM_ASM.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: ARM_ASM.elf
+ 
+arm-none-eabi-size  ARM_ASM.elf 
+arm-none-eabi-objdump -h -S ARM_ASM.elf  > "ARM_ASM.list"
+   text	   data	    bss	    dec	    hex	filename
+    716	      8	   1568	   2292	    8f4	ARM_ASM.elf
+Finished building: default.size.stdout
+ 
+Finished building: ARM_ASM.list
+ 
