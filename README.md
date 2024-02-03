@@ -1,6 +1,6 @@
 # GENERAL PORPUSE CODE SOURCE
 
-## TO USE printf() -> #include <stdio.h>
+## TIPS
 
 ```sh
    To use printf() -> #include <stdio.h> and press red button on botton right corner
