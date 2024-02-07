@@ -18,6 +18,7 @@
 .equ ADC1_CR2,		0x40012008
 .equ ADC1_SMPR2,	0x40012010
 .equ ADC_CCR,		0x40012304
+.equ ADC1_SQR1,		0x4001202C
 .equ ADC1_SQR3,		0x40012034
 .equ ADC1_SR,		0x40012000
 .equ ADC1_DR,		0x4001204C
@@ -27,18 +28,135 @@
 .global main
 main:
 	bl SysClockConfig
+	bl ADC_INIT
+	bl ADC_ENABLE
+	bl ADC_START
+	bl ADC_WaitForConv
 
+	ldr r0, =ADC1_DR
+	ldr r1, [r0]
 
+	bl ADC_DISABLE
 
 
 ADC_INIT:
+	//ENABLING ADC
+	ldr r0, =RCC_APB2ENR
+	ldr r1, [r0]
+	orr r1, (1<<8)
+	str r1, [r0]
+
 	// ENABLING GPIOA
 	ldr r0, =RCC_AHB1ENR
 	ldr r1, [r0]
 	orr r1, #(1<<0)
 	str r1, [r0]
 
+	//ADC PCLK2 divide by 6 prescaler
+	ldr r0, =ADC_CCR
+	ldr r1, [r0]
+	orr r1, (2<<16)
+	str r1, [r0]
 
+	// scan mode enabled
+	ldr r0, =ADC1_CR1
+	ldr r1, [r0]
+	orr r1, (1<<8)
+	str r1, [r0]
+
+	//Sets resolution to 12bits(default)
+	ldr r0, =ADC1_CR1
+	ldr r1, [r0]
+	mov r2, #1
+	lsl r2,r2,#24
+	mvn r2,r2
+	and r1, r2
+	str r1, [r0]
+
+	// CONFIGURATION OF ADC1 CR1
+	ldr r0, =ADC1_CR2
+	ldr r1, [r0]
+	orr r1, (1<<1)
+	orr r1, (1<<10)
+	mov r2, #1
+	lsl r2, r2, #11
+	and r1, r2
+	orr r1, (1<<8)
+	orr r1, (1<<9)
+	str r1, [r0]
+
+	// Sampling time of 3 cycles for channels 1 and 4
+	ldr r0, =ADC1_SMPR2
+	ldr r1, [r0]
+	mov r2, #(7<<3)
+	orr r2, (7<<12)
+	mvn r2, r2
+	and r1, r2
+	str r1, [r0]
+
+	ldr r0, =ADC1_SQR1
+	ldr r1, [r0]
+	orr r1, (2<<20)
+	str r1, [r0]
+
+	ldr r0, =GPIOA_MODER
+	ldr r1, [r0]
+	orr r1, (3<<2)
+	orr r1, (3<<8)
+	str r1, [r0]
+
+	bx lr
+
+ADC_ENABLE:
+	ldr r0, =ADC1_CR2
+	ldr r1, [r0]
+	orr r1, (1<<0)
+	str r1, [r0]
+	ldr r2, =2666666
+	DELAY0:
+		subs r2,r2,#1
+		bne DELAY0
+		bx lr
+	bx lr
+
+ADC_START:
+	ldr r0, =ADC1_SQR3
+	ldr r1, [r0]
+	orr r1, (1<<0)
+	orr r1, (4<<5)
+	orr r1, (18<<10)
+	str r1, [r0]
+
+	ldr r0, =ADC1_SR
+	ldr r1, [r0]
+	and r1, #0 // Cleaning status register
+	str r1, [r0]
+
+	ldr r0, =ADC1_CR2
+	ldr r1, [r0]
+	orr r1, (1<<30)
+	str r1, [r0]// Start the conversion
+
+	bx lr
+
+ADC_WaitForConv:
+	ldr r0, =ADC1_SR
+	ldr r1, [r0]
+	DELAY1:
+		ldr r2, =(1<<1)
+		tst r1,r2
+		bne DELAY1
+		bx lr
+
+	bx lr
+
+ADC_DISABLE:
+	ldr r0, =ADC1_CR2
+	ldr r1, [r0]
+	mov r2, #(1<<0)
+	mvn r2, r2
+	and r1, r2
+	str r1, [r0]
 
 	bx lr
 
@@ -82,7 +200,7 @@ SysClockConfig:
 
 	loop1:
 		ldr r2, =(1<<25)
-		tst r1,r2
+		tst r1,r2			//(test bits) instruction can be used to test if one or more bits are set.
 		bne loop1
 		bx lr
 
@@ -100,7 +218,5 @@ SysClockConfig:
 		bx lr
 
 	bx lr
-
-
 
 .end
