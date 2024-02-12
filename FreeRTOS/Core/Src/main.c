@@ -122,7 +122,7 @@ int main(void)
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
-  osThreadDef(MyTask,MyTask_Init,osPriorityAboveNormal,0, 128 );
+  osThreadDef(MyTask,MyTask_Init,osPriorityHigh,0, 128 );
   MyTaskHandler = osThreadCreate(osThread(MyTask),NULL);
 
   /* USER CODE END RTOS_THREADS */
@@ -219,6 +219,11 @@ void MyTask_Init(void const *arg){
 	for(;;){
 		printf("index = %d\n",indx++);
 		osDelay(2000);
+		if(indx == 3)
+			osThreadSuspend(defaultTaskHandle);
+		if(indx == 6)
+			osThreadResume(defaultTaskHandle);
+
 	}
 }
 /* USER CODE END 4 */
