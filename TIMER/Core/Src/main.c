@@ -6,8 +6,8 @@ void TimerConfig(void);
 
 
 int main(void){
-	void SysClockConfig(void);
-	void TimerConfig(void);
+	SysClockConfig();
+	TimerConfig();
 
 
 	while(1){
