@@ -115,7 +115,7 @@ void SysClockConfig(void){
 	RCC->CFGR |= 0x00008000U;
 
 	//CONFIGURE THE MAIN PLL
-	RCC->PLLCFGR = (4 <<0) | (180 << 6) | (0 <<16) | (1<<22);
+	RCC->PLLCFGR = (4 <<0) | (168 << 6) | (0 <<16) | (1<<22);
 
 	//Enable the PLL and wait for it to become ready
 	RCC->CR |= (1<<24);
