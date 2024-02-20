@@ -6,6 +6,7 @@ void USART2_Init(void);
 void USART2_SendChar(uint8_t c);
 uint8_t UART2_GetChar(void);
 void delay(uint32_t time);
+void USART2_SendString(char *string);
 
 uint8_t buffer[30];
 int indx = 0;
@@ -14,9 +15,9 @@ int main(void){
 	GPIOA_Init();
 	USART2_Init();
 	while(1){
-		delay(1000000);
-		USART2_SendChar(0x11);
-		delay(1000000);
+		delay(4000000);
+		USART2_SendString("Hello world");
+		delay(4000000);
 	}
 	return 0;
 }
@@ -53,6 +54,9 @@ void GPIOA_Init(void){
 	GPIOA->AFR[0] |= (7<<12); // AF7 -> PA3
 }
 
+void USART2_SendString(char *string){
+	while (*string) USART2_SendChar (*string++);
+}
 
 void SysClockConfig(void){
 	RCC->CR |= (1 << 16); //HSE on

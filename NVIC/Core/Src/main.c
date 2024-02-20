@@ -41,7 +41,7 @@ void PA0_CFG(void){
 	RCC->AHB1ENR |= (1<<0); //ENABLES GPIOA
 
 	GPIOA->MODER &= ~(3<<0); //PIN A0 AS INPUT
-	GPIOA->PUPDR |= (1<<1);  //ENABLES PULLUPS
+	GPIOA->PUPDR |= (1<<1);  //ENABLES PULLUPS -> pull down
 
 	RCC->APB2ENR |= (1<<14); //System configuration clock enabled
 	SYSCFG->EXTICR[0] &= ~(0x0F<<0);
@@ -75,7 +75,7 @@ void SysClockConfig(void){
 	RCC->CFGR |= 0x00008000U;
 
 	//CONFIGURE THE MAIN PLL
-	RCC->PLLCFGR = (4 <<0) | (180 << 6) | (0 <<16) | (1<<22);
+	RCC->PLLCFGR = (4 <<0) | (168 << 6) | (0 <<16) | (1<<22);
 
 	//Enable the PLL and wait for it to become ready
 	RCC->CR |= (1<<24);
