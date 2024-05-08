@@ -1,6 +1,8 @@
 #include "main.h"
 
 void SysClockConfig(void);
+void SPIConfig(void);
+void SPITransmit(uint8_t *data, size);
 
 
 int main(void){
@@ -13,15 +15,29 @@ int main(void){
 }
 
 void SPIConfig(void){
-	RCC->AHB2ENR |= (1<<12); 		// ENABLE SPI CLOCK
-	SPI1->CR1 |= (3<<0); 	 		// CPOL = 1, CPHA = 1
-	SPI1->CR1 |= (1<<2);	 		// MASTER MODE
-	SPI1->CR1 |= (3<<3);	 		// fpclk/16, PLCK2 = 80MHz, SPI clock = 5MHZz
-	SPI1->CR1 |= (1<<8) | (1<<9);	// SSM=1, SSi=1 -> Software Slave Managemen
-	SPI1->CR1 &= ~(1<<10);   		// RXONLY = 0, full-duplex
-	SPI1->CR1 &= ~(1<<11);   		// DFF=0, 8 bit data
-	SPI1->CR2 = 0;			 		// DFF=0, 8 bit data
+	RCC->AHB2ENR |= (1<<12); 			// ENABLE SPI CLOCK
+	SPI1->CR1 |= (3<<0); 	 			// CPOL = 1, CPHA = 1
+	SPI1->CR1 |= (1<<2);	 			// MASTER MODE
+	SPI1->CR1 |= (3<<3);	 			// fpclk/16, PLCK2 = 80MHz, SPI clock = 5MHZz
+	SPI1->CR1 |= (1<<8) | (1<<9);		// SSM=1, SSi=1 -> Software Slave Managemen
+	SPI1->CR1 &= ~(1<<10);   			// RXONLY = 0, full-duplex
+	SPI1->CR1 &= ~(1<<11);   			// DFF=0, 8 bit data
+	SPI1->CR2 = 0;			 			// DFF=0, 8 bit data
 }
+
+void SPITransmit(uint8_t *data, size){
+	int i = 0;
+	while(i<size){
+		while(!((SPI1->SR)&(1<<1)));    // wait for TXE bit to set -> This will indicate that the buffer is empty
+		SPI1->DR = data[i];				// load the data into the Data Register
+		i++;
+	}
+	while(!((SPI1->SR)&(1<<1)));
+	while(((SPI1->SR)&(1<<7)));
+	uint8_t temp = SPI1->DR;
+	temp = SPI1->SR;
+}
+
 
 void SysClockConfig(void){
 	RCC->CR |= (1 << 16); //HSE on
