@@ -112,9 +112,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
 // GPIO OUTPUT -- EXAMPLE
 /*
-	  while(1){
+	  while(1){ // HAL -> HARDWARE ABSTRACTION LAYER
 		HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12,1);
 		HAL_Delay(1000);
 		HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12,0);
@@ -123,8 +124,8 @@ int main(void)
 */
 
 // GPIO INPUT(POLLING) -- EXAMPLE
-
 /*
+
 	  while(1){
 		if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)){
 			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12,1);
@@ -137,6 +138,7 @@ int main(void)
 // ADC(POLLING) -- EXAMPLE
 
 /*
+
 	  while(1){
 		  HAL_ADC_Start(&hadc1);
 		  HAL_ADC_PollForConversion(&hadc1, 500);
@@ -147,8 +149,8 @@ int main(void)
 
 // TIMER PWM GENERATION -- EXAMPLE
 
-/*
 
+/*
 	  while(1){
 		TIM1->CCR1 = 80;
 		HAL_Delay(5000);
@@ -159,13 +161,13 @@ int main(void)
 
 // SPI PROTOCOL SIGNAL GENERATION -- EXAMPLE
 
+
 	  while(1){
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7,0);
 		  HAL_SPI_Transmit(&hspi2,(uint8_t *)buffer,60, 10);
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7,1);
 		  HAL_Delay(1000);
 	  }
-
 
     /* USER CODE END WHILE */
 

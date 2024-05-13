@@ -81,7 +81,7 @@ void SysClockConfig(void){
 	RCC->CR |= (1<<24);
 	while (!(RCC->CR & (1<<25)));
 
-	//Select the Clock Source and wait for it to be set
+	//Select the Clgock Source and wait for it to be set
 	RCC->CFGR |= 0x02;
 	while ((RCC->CFGR & (3<<2)) != 0x08);
 
