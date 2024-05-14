@@ -18,7 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
+#include "stdio.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "i2c-lcd.h"
@@ -41,6 +41,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 I2C_HandleTypeDef hi2c1;
+I2C_HandleTypeDef hi2c2;
 
 /* USER CODE BEGIN PV */
 /* USER CODE END PV */
@@ -49,12 +50,76 @@ I2C_HandleTypeDef hi2c1;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_I2C1_Init(void);
+static void MX_I2C2_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+#define MPU6050_ADDR 		0XD0
+#define SMPLRT_DIV_REG 		0X19
+#define GYRO_CONFIG_REG 	0X1B
+#define ACCEL_CONFIG_REG 	0X1C
+#define ACCEL_XOUT_H_REG	0X3B
+#define TEMP_OUT_H_REG 		0X41
+#define GYRO_XOUT_H_REG 	0X43
+#define PWR_MGMT_1_REG 		0X6B
+#define WHO_AM_I_REG 		0X75
+
+// accelerometer dimensions
+uint16_t accel_x_raw;
+uint16_t accel_y_raw;
+uint16_t accel_z_raw;
+
+// gyroscope dimensions
+uint16_t gyro_x_raw;
+uint16_t gyro_y_raw;
+uint16_t gyro_z_raw;
+
+float Ax, Ay, Az, Gx, Gy, Gz;
+
+
+void MPU6050_Init(void){
+	uint8_t check, data;
+	HAL_I2C_Mem_Read(&hi2c2, MPU6050_ADDR, WHO_AM_I_REG,1,&check, 1, 1000);
+	if(check == 104){  // if device is present
+		// power management register should be written with 0's to wake up the sensor
+		data = 0;
+		HAL_I2C_Mem_Write(&hi2c2, MPU6050_ADDR,PWR_MGMT_1_REG,1, &data, 1,1000);
+		// set data rate of 1khz by writing SMPLRT_DIV register
+		data = 0x07;
+		HAL_I2C_Mem_Write(&hi2c2, MPU6050_ADDR,SMPLRT_DIV_REG,1, &data, 1,1000);
+
+		data = 0x00;
+		HAL_I2C_Mem_Write(&hi2c2, MPU6050_ADDR,ACCEL_CONFIG_REG,1, &data, 1,1000);
+
+		data = 0x00;
+		HAL_I2C_Mem_Write(&hi2c2, MPU6050_ADDR,GYRO_CONFIG_REG,1, &data, 1,1000);
+	}
+}
+
+void MPU6050_Read_Accel(void){
+	uint8_t rec_data[6];
+	HAL_I2C_Mem_Read(&hi2c2, MPU6050_ADDR,ACCEL_XOUT_H_REG,1,rec_data, 6,1000);
+	accel_x_raw = (uint16_t)(rec_data[0] << 8 | rec_data[1]);
+	accel_y_raw = (uint16_t)(rec_data[2] << 8 | rec_data[3]);
+	accel_z_raw = (uint16_t)(rec_data[4] << 8 | rec_data[5]);
+	Ax = accel_x_raw/16384.0;
+	Ay = accel_y_raw/16384.0;
+	Az = accel_z_raw/16384.0;
+}
+
+void MPU6050_Read_Gyro(void){
+	uint8_t rec_data[6];
+	HAL_I2C_Mem_Read(&hi2c2, MPU6050_ADDR,GYRO_XOUT_H_REG,1,rec_data, 6,1000);
+	gyro_x_raw = (uint16_t)(rec_data[0] << 8 | rec_data[1]);
+	gyro_y_raw = (uint16_t)(rec_data[2] << 8 | rec_data[3]);
+	gyro_z_raw = (uint16_t)(rec_data[4] << 8 | rec_data[5]);
+	Gx = gyro_x_raw/131.0;
+	Gy = gyro_y_raw/131.0;
+	Gz = gyro_z_raw/131.0;
+}
 
 /* USER CODE END 0 */
 
@@ -65,6 +130,7 @@ static void MX_I2C1_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+  char buf[4];
 
   /* USER CODE END 1 */
 
@@ -87,13 +153,15 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_I2C1_Init();
+  MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
   lcd_init();
-  lcd_send_string("Hello World");
-  HAL_Delay(1000);
-  // lcd_clear();
-  lcd_put_cur(1,0);
-  lcd_send_string("ANTUNES");
+  MPU6050_Init();
+  //lcd_send_string("Initialized");
+  //HAL_Delay(1000);
+  //lcd_clear();
+  //lcd_send_cmd(0x80|0x5a);
+  //lcd_send_string("MPU6050");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -103,9 +171,10 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  MPU6050_Read_Accel();
+	  MPU6050_Read_Gyro();
 
-	  //HAL_I2C_Master_Transmit(&hi2c1, DEV_ADDR,i2_data, sizeof(i2_data), 10);
-	  //HAL_Delay(1000);
+	  HAL_Delay (250);  // wait for a while
   }
   /* USER CODE END 3 */
 }
@@ -186,6 +255,40 @@ static void MX_I2C1_Init(void)
 }
 
 /**
+  * @brief I2C2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2C2_Init(void)
+{
+
+  /* USER CODE BEGIN I2C2_Init 0 */
+
+  /* USER CODE END I2C2_Init 0 */
+
+  /* USER CODE BEGIN I2C2_Init 1 */
+
+  /* USER CODE END I2C2_Init 1 */
+  hi2c2.Instance = I2C2;
+  hi2c2.Init.ClockSpeed = 50000;
+  hi2c2.Init.DutyCycle = I2C_DUTYCYCLE_2;
+  hi2c2.Init.OwnAddress1 = 0;
+  hi2c2.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c2.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c2.Init.OwnAddress2 = 0;
+  hi2c2.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c2.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2C2_Init 2 */
+
+  /* USER CODE END I2C2_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -197,8 +300,8 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOH_CLK_ENABLE();
-  __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
