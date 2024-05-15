@@ -20,6 +20,9 @@
 #include <main.hpp>
 #include "filter.hpp"
 #include "stdio.h"
+#include <math.h>
+#include <time.h>
+#include "stdlib.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -28,7 +31,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+uint32_t _values = 0;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -127,6 +130,17 @@ void MPU6050_Read_Gyro(void) {
 	Gz = gyro_z_raw / 131.0;
 }
 
+int getRandomNumber(int min, int max) {
+    // Seed the random number generator
+    srand(_values);
+    _values++;
+    if(_values == 4000000)
+    	_values = 0;
+
+    // Generate a random number between min and max
+    return rand() % (max - min + 1) + min;
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -135,6 +149,12 @@ void MPU6050_Read_Gyro(void) {
  */
 int main(void) {
 	/* USER CODE BEGIN 1 */
+	filter FIR = filter(fir,4);
+	float imp_res[4] = {0.25,0.25,0.25,0.25};
+	float value;
+	float angle = 30;
+	float filtered_value;
+	float noised_signal;
 	/* USER CODE END 1 */
 
 	/* MCU Configuration--------------------------------------------------------*/
@@ -143,7 +163,6 @@ int main(void) {
 	HAL_Init();
 
 	/* USER CODE BEGIN Init */
-
 	/* USER CODE END Init */
 
 	/* Configure the system clock */
@@ -173,10 +192,18 @@ int main(void) {
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
-		MPU6050_Read_Accel();
-		MPU6050_Read_Gyro();
+		// MPU6050_Read_Accel();
+		// MPU6050_Read_Gyro();
+		if(angle == 360){
+			angle = 0;
+		}
+		value = sin(angle*M_PI/180);
+		angle = angle + 1;
+		noised_signal = value + ((float)getRandomNumber(0,100)/200 - 0.25)/10;
+		filtered_value = FIR.update(noised_signal, imp_res);
 
-		HAL_Delay(250);  // wait for a while
+
+		HAL_Delay(20);  // wait for a while
 	}
 	/* USER CODE END 3 */
 }
